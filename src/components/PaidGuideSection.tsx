@@ -18,17 +18,17 @@ const GUIDE_SLUG = 'guia-para-el-estres'
 const GUIDE_PREVIEW_URL = '/previews/guia-para-el-estres-preview.pdf#toolbar=0&navpanes=0&scrollbar=0'
 
 const guideTopics = [
-  'Que es el estres y como identificarlo a tiempo.',
-  'Senales fisicas, emocionales y mentales mas frecuentes.',
-  'Ejercicios practicos para bajar tension en minutos.',
-  'Rutina sencilla para prevenir que el estres te sobrepase.',
+  'Qué es el estrés y cómo identificarlo a tiempo.',
+  'Señales físicas, emocionales y mentales más frecuentes.',
+  'Ejercicios prácticos para bajar la tensión en minutos.',
+  'Rutina sencilla para prevenir que el estrés te sobrepase.',
 ]
 
 const unlockedTools = [
-  'Ejercicio de respiracion guiada.',
+  'Ejercicio de respiración guiada.',
   'Checklist personal de detonantes.',
-  'Plan breve de regulacion emocional.',
-  'Recomendaciones practicas para el dia a dia.',
+  'Plan breve de regulación emocional.',
+  'Recomendaciones prácticas para el día a día.',
 ]
 
 export function PaidGuideSection() {
@@ -66,7 +66,7 @@ export function PaidGuideSection() {
         await verifyAccess(savedEmail, productResponse.slug)
       }
     } catch (loadError) {
-      setError(loadError instanceof Error ? loadError.message : 'No se pudo cargar la guia.')
+      setError(loadError instanceof Error ? loadError.message : 'No se pudo cargar la guía.')
     } finally {
       setLoadingProduct(false)
     }
@@ -87,8 +87,8 @@ export function PaidGuideSection() {
       setHasAccess(response.hasAccess)
       setMessage(
         response.hasAccess
-          ? 'Tu acceso ya esta activo. Puedes revisar la guia completa.'
-          : 'Todavia no tienes acceso desbloqueado para esta guia.',
+          ? 'Tu acceso ya está activo. Puedes revisar la guía completa.'
+          : 'Todavía no tienes acceso desbloqueado para esta guía.',
       )
     } catch (accessError) {
       setError(accessError instanceof Error ? accessError.message : 'No se pudo verificar el acceso.')
@@ -99,7 +99,7 @@ export function PaidGuideSection() {
 
   async function handlePurchase() {
     if (!product) {
-      setError('La guia aun no esta disponible.')
+      setError('La guía aún no está disponible.')
       return
     }
 
@@ -129,7 +129,7 @@ export function PaidGuideSection() {
       const paypalOrder = await createPaypalOrder(order.id)
 
       if (!paypalOrder.approveLink) {
-        throw new Error('PayPal no devolvio el enlace de aprobacion.')
+        throw new Error('PayPal no devolvió el enlace de aprobación.')
       }
 
       savePendingPurchase({
@@ -172,8 +172,8 @@ export function PaidGuideSection() {
     <div className="card paidGuide">
       <div className="paidGuide__head">
         <div>
-          <h3>Guia para el estres</h3>
-          <p className="muted">Lee gratis las primeras 3 paginas. Desde la pagina 4 el acceso completo es de pago.</p>
+          <h3>Guía para el estrés</h3>
+          <p className="muted">Lee gratis las primeras 3 páginas. Desde la página 4, el acceso completo es de pago.</p>
         </div>
         <span className="paidGuide__price">{loadingProduct || !product ? '...' : `$${product.price.toFixed(2)}`}</span>
       </div>
@@ -186,8 +186,8 @@ export function PaidGuideSection() {
         <div className="guideLockedPage">
           <div className="guideLockedPage__blur" />
           <div className="guideLockedPage__content">
-            <p className="guideLockedPage__eyebrow">Pagina 4 en adelante</p>
-            <h4>Quieres seguir leyendo la guia completa?</h4>
+            <p className="guideLockedPage__eyebrow">Página 4 en adelante</p>
+            <h4>¿Quieres seguir leyendo la guía completa?</h4>
             <p>
               Completa el pago para desbloquear el workbook entero, leer todo el contenido y descargar el PDF protegido.
             </p>
@@ -198,7 +198,7 @@ export function PaidGuideSection() {
       <div className={`guidePreview ${hasAccess ? 'is-unlocked' : 'is-locked'}`}>
         <div className="guidePreview__content">
           <p>
-            Esta guia te ayuda a reconocer el estres, entender como afecta tu cuerpo y aplicar herramientas concretas
+            Esta guía te ayuda a reconocer el estrés, entender cómo afecta tu cuerpo y aplicar herramientas concretas
             para regularlo.
           </p>
 
@@ -241,7 +241,7 @@ export function PaidGuideSection() {
         </label>
 
         <label>
-          Correo electronico
+          Correo electrónico
           <input
             type="email"
             value={email}
@@ -250,7 +250,7 @@ export function PaidGuideSection() {
           />
         </label>
         <p className="paidGuide__hint">
-          Revisa bien este correo, porque aqui se te enviara el PDF de la guia y tambien conviene revisar la carpeta de spam.
+          Revisa bien este correo, porque aquí se te enviará el PDF de la guía. También conviene revisar la carpeta de spam.
         </p>
 
         <div className="paidGuide__actions">
@@ -260,7 +260,7 @@ export function PaidGuideSection() {
 
           {!hasAccess && (
             <button className="btn paidGuide__buyBtn" type="button" onClick={() => void handlePurchase()} disabled={submitting || loadingProduct}>
-              {submitting ? 'Conectando con PayPal...' : 'Comprar guia con PayPal'}
+              {submitting ? 'Conectando con PayPal...' : 'Comprar guía con PayPal'}
             </button>
           )}
         </div>

@@ -12,11 +12,11 @@ export function ProfileHeader({ socialLinks }: ProfileHeaderProps) {
       </div>
 
       <h1>Andrea Arias</h1>
-      <p className="role">Psicóloga Clínica - Modalidad Online y Presencial</p>
+      <p className="role">Psicóloga clínica - Modalidad online y presencial</p>
 
       <p className="bio">
-        Bienvenido/a: Te ofrezco un espacio seguro y confidencial para trabajar tus emociones con un enfoque integral
-        y principalmente basado en Terapia Cognitivo-Conductual (TCC), adaptado a niños, jóvenes y adultos.
+        Bienvenido/a. Te ofrezco un espacio seguro y confidencial para trabajar tus emociones con un enfoque integral,
+        principalmente basado en terapia cognitivo-conductual (TCC) y adaptado a niños, jóvenes y adultos.
       </p>
 
       <nav className="social">

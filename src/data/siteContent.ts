@@ -1,4 +1,4 @@
-export const CALENDLY_AGENDAR = 'https://calendly.com/psicologa-andrearias/agenda-consulta-psicologica'
+export const CALENDLY_AGENDAR = 'https://wa.link/qm4c8m'
 export const WHATSAPP_VOCACIONAL = 'https://wa.link/bzkv06'
 export const WHATSAPP_PLAN_4 = 'https://wa.link/dzcyhk'
 export const WHATSAPP_PLAN_8 = 'https://wa.link/l04p1y'
@@ -68,7 +68,7 @@ export const menuLinks: MenuLink[] = [
   { href: '/agendar', label: '📅 Agendar cita' },
   { href: '/sobre-mi', label: '👩🏻‍⚕️ Sobre mí' },
   { href: '/servicios', label: '🌿 Servicios' },
-  { href: '/cursos', label: '📚 Cursos y guias disponibles' },
+  { href: '/cursos', label: '📚 Cursos y guías disponibles' },
   { href: '/precios', label: '💻 Sesiones y precios' },
   { href: '/formulario', label: '🧾 ¿No sabes por dónde empezar?' },
   { href: '/material', label: '📝 Material psicológico gratuito' },
@@ -210,9 +210,9 @@ export const faqItems: FaqItem[] = [
 
 export const workbookGuides: WorkbookGuide[] = [
   {
-    title: 'Guia para el estres',
+    title: 'Guía para el estrés',
     slug: 'guia-para-el-estres',
-    description: 'Workbook practico con herramientas para entender, regular y disminuir el estres paso a paso.',
+    description: 'Workbook práctico con herramientas para entender, regular y disminuir el estrés paso a paso.',
     priceLabel: '$12.50',
   },
 ]

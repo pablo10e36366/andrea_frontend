@@ -42,7 +42,7 @@ function PaypalSuccessPage() {
         const accessResult = await checkAccess(pendingPurchase.email, pendingPurchase.productSlug)
 
         if (!accessResult.hasAccess) {
-          throw new Error('El pago se proceso, pero el acceso no quedo habilitado todavia.')
+          throw new Error('El pago se procesó, pero el acceso todavía no quedó habilitado.')
         }
 
         saveLastCustomer({
@@ -53,7 +53,7 @@ function PaypalSuccessPage() {
 
         setState('success')
         setMessage(
-          `Tu pago fue confirmado. El PDF de la guia se enviara al correo ${pendingPurchase.email}. Revisa tambien tu carpeta de spam por si acaso.`,
+          `Tu pago fue confirmado. El PDF de la guía se enviará al correo ${pendingPurchase.email}. Revisa también tu carpeta de spam por si acaso.`,
         )
       } catch (confirmError) {
         setState('error')
@@ -72,7 +72,7 @@ function PaypalSuccessPage() {
         <div className="paymentResult__actions">
           {state === 'success' && (
             <Link className="btn" to="/workbooks/guia-para-el-estres">
-              Ir a la guia desbloqueada
+              Ir a la guía desbloqueada
             </Link>
           )}
           <Link className="btn paymentResult__secondary" to="/workbooks">
@@ -89,7 +89,7 @@ function PaypalCancelPage() {
     <section className="section">
       <div className="card paymentResult">
         <h2>Pago cancelado</h2>
-        <p>La compra se cancelo antes de completarse. Puedes intentarlo nuevamente cuando quieras.</p>
+        <p>La compra se canceló antes de completarse. Puedes intentarlo nuevamente cuando quieras.</p>
         <div className="paymentResult__actions">
           <Link className="btn" to="/workbooks">
             Volver a workbooks
