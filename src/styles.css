@@ -614,7 +614,7 @@ input:focus, textarea:focus, select:focus{
 
 .paidGuide__head{
   display:flex;
-  justify-content:space-between;
+  justify-content:flex-end;
   align-items:flex-start;
   gap: 16px;
   margin-bottom: 14px;

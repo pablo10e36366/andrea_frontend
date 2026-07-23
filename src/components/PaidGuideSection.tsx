@@ -171,10 +171,6 @@ export function PaidGuideSection() {
   return (
     <div className="card paidGuide">
       <div className="paidGuide__head">
-        <div>
-          <h3>Guía para el estrés</h3>
-          <p className="muted">Lee gratis las primeras 3 páginas. Desde la página 4, el acceso completo es de pago.</p>
-        </div>
         <span className="paidGuide__price">{loadingProduct || !product ? '...' : `$${product.price.toFixed(2)}`}</span>
       </div>
 
@@ -188,9 +184,7 @@ export function PaidGuideSection() {
           <div className="guideLockedPage__content">
             <p className="guideLockedPage__eyebrow">Página 4 en adelante</p>
             <h4>¿Quieres seguir leyendo la guía completa?</h4>
-            <p>
-              Completa el pago para desbloquear el workbook entero, leer todo el contenido y descargar el PDF protegido.
-            </p>
+            <p>Completa el pago para desbloquear el workbook.</p>
           </div>
         </div>
       )}
@@ -250,7 +244,10 @@ export function PaidGuideSection() {
           />
         </label>
         <p className="paidGuide__hint">
-          Revisa bien este correo, porque aquí se te enviará el PDF de la guía. También conviene revisar la carpeta de spam.
+          📩 <em>Revisa tu correo electrónico.</em> Tu workbook será enviado en formato PDF una vez completes tu compra.
+          <br />
+          <br />
+          Si no lo encuentras en tu bandeja de entrada, recuerda revisar la carpeta de <em>spam</em> o <em>correo no deseado</em>.
         </p>
 
         <div className="paidGuide__actions">
@@ -260,7 +257,7 @@ export function PaidGuideSection() {
 
           {!hasAccess && (
             <button className="btn paidGuide__buyBtn" type="button" onClick={() => void handlePurchase()} disabled={submitting || loadingProduct}>
-              {submitting ? 'Conectando con PayPal...' : 'Comprar guía con PayPal'}
+              {submitting ? 'Conectando con PayPal...' : '¡Comprar ahora!'}
             </button>
           )}
         </div>

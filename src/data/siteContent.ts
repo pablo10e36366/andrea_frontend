@@ -69,7 +69,7 @@ export const menuLinks: MenuLink[] = [
   { href: '/sobre-mi', label: '👩🏻‍⚕️ Sobre mí' },
   { href: '/servicios', label: '🌿 Servicios' },
   { href: '/cursos', label: '📚 Cursos y guías disponibles' },
-  { href: '/precios', label: '💻 Sesiones y precios' },
+  { href: '/precios', label: '💻 Información sobre las sesiones' },
   { href: '/formulario', label: '🧾 ¿No sabes por dónde empezar?' },
   { href: '/material', label: '📝 Material psicológico gratuito' },
   { href: '/faq', label: '💭 Preguntas frecuentes' },
@@ -178,15 +178,6 @@ export const freeResources: FreeResource[] = [
 
 export const faqItems: FaqItem[] = [
   {
-    question: '¿Cómo se agenda una cita?',
-    type: 'ordered',
-    items: [
-      'Elige un horario disponible en Calendly.',
-      'Completa el formulario con tus datos.',
-      'Luego me comunicaré contigo por WhatsApp para confirmar la cita y darte la información correspondiente.',
-    ],
-  },
-  {
     question: '¿Puedo contactarte si tengo dudas?',
     type: 'paragraph',
     text: 'Sí, puedes escribirme por WhatsApp o correo electrónico si deseas más información sobre los servicios o el proceso terapéutico. Será un gusto poder ayudarte.',
@@ -210,7 +201,7 @@ export const faqItems: FaqItem[] = [
 
 export const workbookGuides: WorkbookGuide[] = [
   {
-    title: 'Guía para el estrés',
+    title: 'Guía para la ansiedad',
     slug: 'guia-para-el-estres',
     description: 'Workbook práctico con herramientas para entender, regular y disminuir el estrés paso a paso.',
     priceLabel: '$12.50',

@@ -12,7 +12,7 @@ export function AgendarSection({ calendlyUrl }: AboutSectionProps) {
     <section id="detail-agendar" className="section">
       <h2>Agendar cita</h2>
       <div className="card">
-        <p>Selecciona el horario que mejor te funcione y reserva tu sesión.</p>
+        <p>Da el primer paso hacia tu bienestar emocional. Agenda tu primera sesión y comencemos este proceso juntos ✨.</p>
         <a className="btn" href={calendlyUrl} target="_blank" rel="noopener noreferrer">
           Agendar ahora
         </a>
@@ -89,13 +89,11 @@ export function CoursesSection() {
   return (
     <section id="detail-cursos" className="section">
       <h2>Cursos y guías disponibles</h2>
-      <p className="muted">Recursos formativos y prácticos con acceso adicional de pago.</p>
 
       <div className="grid">
         <div className="card workbookCategory">
-          <h3>Workbooks</h3>
-          <p>Guías prácticas en PDF para leer, trabajar ejercicios y aplicar herramientas concretas a tu ritmo.</p>
-          <p className="muted small">Entra aquí para ver todas las guías disponibles y abrir la vista previa.</p>
+          <h3>Workbooks de Psicología </h3>
+          <p>Guías prácticas con ejercicios y herramientas psicológicas que te ayudarán a gestionar tus emociones, fortalecer tu bienestar y aplicar lo aprendido en tu día a día.</p>
           <Link className="btn" to="/workbooks">
             Ver workbooks
           </Link>
@@ -103,7 +101,7 @@ export function CoursesSection() {
 
         <div className="card">
           <h3>Talleres guiados</h3>
-          <p>Encuentros prácticos con ejercicios, hojas de trabajo y acompañamiento puntual sobre un tema específico.</p>
+          <p>Muy pronto estarán disponibles talleres prácticos para trabajar temas como ansiedad, autoestima, manejo del estrés, relaciones y crecimiento personal, con acompañamiento profesional</p>
           <p className="muted small">Pensado para estudiantes, padres, parejas o personas en proceso terapéutico.</p>
         </div>
       </div>
@@ -119,15 +117,11 @@ export function WorkbooksLandingSection({ guides }: WorkbooksLandingSectionProps
   return (
     <section id="detail-workbooks" className="section">
       <h2>Workbooks</h2>
-      <p className="muted">Abre cada guía, revisa las primeras 3 páginas y desbloquea el acceso completo si quieres seguir leyendo.</p>
 
       <div className="grid">
         {guides.map((guide) => (
           <article key={guide.slug} className="card workbookCard">
-            <p className="workbookCard__tag">Vista previa de 3 páginas</p>
             <h3>{guide.title}</h3>
-            <p>{guide.description}</p>
-            <p className="muted small">Acceso completo: {guide.priceLabel}</p>
             <Link className="btn" to={`/workbooks/${guide.slug}`}>
               Abrir workbook
             </Link>
@@ -141,8 +135,7 @@ export function WorkbooksLandingSection({ guides }: WorkbooksLandingSectionProps
 export function WorkbookGuidePageSection() {
   return (
     <section id="detail-workbook-guide" className="section">
-      <h2>Workbook: Guía para el estrés</h2>
-      <p className="muted">Puedes leer gratis las primeras 3 páginas. Para continuar desde la página 4, necesitas desbloquear el acceso completo.</p>
+      <h2>Workbook: Guía para la ansiedad</h2>
       <PaidGuideSection />
     </section>
   )
@@ -163,8 +156,8 @@ export function PricingSection({
 }: PricingSectionProps) {
   return (
     <section id="detail-precios" className="section">
-      <h2>Sesiones y precios</h2>
-      <p className="muted">Atención online vía Zoom y presencial.</p>
+      <h2>Información sobre las sesiones</h2>
+      <p className="muted">Atención psicológica online vía Zoom y presencial.</p>
 
       <div className="actions">
         <a
@@ -173,7 +166,7 @@ export function PricingSection({
           target="_blank"
           rel="noopener noreferrer"
         >
-          Ver ubicación para sesión presencial
+          📍 ubicación
         </a>
       </div>
 
@@ -182,7 +175,7 @@ export function PricingSection({
           <h3>Sesión individual</h3>
           <ul>
             <li>
-              <strong>40-50 min</strong> - <strong>$20</strong>
+              <strong>40-50 min</strong>
             </li>
           </ul>
           <a className="btn" href={calendlyUrl} target="_blank" rel="noopener noreferrer">
@@ -226,11 +219,11 @@ export function PricingSection({
             <li>Test de intereses profesionales</li>
             <li>Interpretación + recomendaciones</li>
             <li>
-              <strong>60 min</strong> - <strong>$30</strong>
+              <strong>60 min</strong>
             </li>
           </ul>
           <a className="btn" href={whatsappVocacional} target="_blank" rel="noopener noreferrer">
-            Si deseas más información sobre la orientación vocacional, haz clic aquí.
+            Más información
           </a>
         </div>
       </div>
