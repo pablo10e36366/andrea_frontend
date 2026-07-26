@@ -170,10 +170,6 @@ export function PaidGuideSection() {
 
   return (
     <div className="card paidGuide">
-      <div className="paidGuide__head">
-        <span className="paidGuide__price">{loadingProduct || !product ? '...' : `$${product.price.toFixed(2)}`}</span>
-      </div>
-
       <div className="guidePreviewDocument">
         <iframe className="guidePreviewDocument__frame" src={GUIDE_PREVIEW_URL} title="Vista previa del workbook" />
       </div>

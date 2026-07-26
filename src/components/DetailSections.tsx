@@ -101,7 +101,7 @@ export function CoursesSection() {
 
         <div className="card">
           <h3>Talleres guiados</h3>
-          <p>Muy pronto estarán disponibles talleres prácticos para trabajar temas como ansiedad, autoestima, manejo del estrés, relaciones y crecimiento personal, con acompañamiento profesional</p>
+          <p>Muy pronto estarán disponibles talleres prácticos para trabajar temas como ansiedad, autoestima, manejo del estrés, relaciones y crecimiento personal, con acompañamiento profesional.</p>
           <p className="muted small">Pensado para estudiantes, padres, parejas o personas en proceso terapéutico.</p>
         </div>
       </div>
@@ -166,7 +166,7 @@ export function PricingSection({
           target="_blank"
           rel="noopener noreferrer"
         >
-          📍 ubicación
+          📍 Ubicación
         </a>
       </div>
 
