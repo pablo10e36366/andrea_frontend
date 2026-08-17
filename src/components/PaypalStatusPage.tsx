@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
-import { capturePaypalOrder, checkAccess } from '../lib/api'
+import { capturePaypalOrder } from '../lib/api'
 import {
   clearPendingPurchase,
   getPendingPurchase,
@@ -29,21 +29,7 @@ function PaypalSuccessPage() {
       }
 
       try {
-        try {
-          await capturePaypalOrder(pendingPurchase.orderId, paypalOrderId)
-        } catch (captureError) {
-          const accessResult = await checkAccess(pendingPurchase.email, pendingPurchase.productSlug)
-
-          if (!accessResult.hasAccess) {
-            throw captureError
-          }
-        }
-
-        const accessResult = await checkAccess(pendingPurchase.email, pendingPurchase.productSlug)
-
-        if (!accessResult.hasAccess) {
-          throw new Error('El pago se procesó, pero el acceso todavía no quedó habilitado.')
-        }
+        await capturePaypalOrder(pendingPurchase.orderId, paypalOrderId)
 
         saveLastCustomer({
           email: pendingPurchase.email,
@@ -53,7 +39,7 @@ function PaypalSuccessPage() {
 
         setState('success')
         setMessage(
-          `Tu pago fue confirmado. El PDF de la guía se enviará al correo ${pendingPurchase.email}. Revisa también tu carpeta de spam por si acaso.`,
+          `Tu pago fue confirmado. Enviamos el PDF y un enlace privado de acceso al correo ${pendingPurchase.email}. Revisa también la carpeta de spam o correo no deseado.`,
         )
       } catch (confirmError) {
         setState('error')
@@ -69,12 +55,12 @@ function PaypalSuccessPage() {
       <div className="card paymentResult">
         <h2>{state === 'loading' ? 'Confirmando pago' : state === 'success' ? 'Pago confirmado' : 'No se pudo confirmar el pago'}</h2>
         <p>{message}</p>
+        {state === 'success' && (
+          <p className="muted small">
+            Para abrir el workbook completo, utiliza exclusivamente el enlace privado enviado a tu correo.
+          </p>
+        )}
         <div className="paymentResult__actions">
-          {state === 'success' && (
-            <Link className="btn" to="/workbooks/guia-para-el-estres">
-              Ir a la guía desbloqueada
-            </Link>
-          )}
           <Link className="btn paymentResult__secondary" to="/workbooks">
             Volver a workbooks
           </Link>

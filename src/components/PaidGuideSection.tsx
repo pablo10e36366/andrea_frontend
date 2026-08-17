@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import {
-  checkAccess,
   createOrder,
   createPaypalOrder,
   getProductBySlug,
-  requestProtectedDownload,
+  getProtectedFile,
+  verifyProtectedAccess,
   type Product,
 } from '../lib/api'
 import {
@@ -15,6 +16,7 @@ import {
 } from '../lib/purchaseStorage'
 
 const GUIDE_SLUG = 'guia-para-el-estres'
+const GUIDE_ACCESS_STORAGE_KEY = `workbook-access:${GUIDE_SLUG}`
 const GUIDE_PREVIEW_URL = '/previews/guia-para-el-estres-preview.pdf#toolbar=0&navpanes=0&scrollbar=0'
 
 const guideTopics = [
@@ -32,10 +34,13 @@ const unlockedTools = [
 ]
 
 export function PaidGuideSection() {
+  const location = useLocation()
+  const navigate = useNavigate()
   const [product, setProduct] = useState<Product | null>(null)
-  const [customerName, setCustomerName] = useState('')
-  const [email, setEmail] = useState('')
+  const [customerName, setCustomerName] = useState(() => getLastCustomer()?.customerName ?? '')
+  const [email, setEmail] = useState(() => getLastCustomer()?.email ?? '')
   const [hasAccess, setHasAccess] = useState(false)
+  const [accessToken, setAccessToken] = useState('')
   const [loadingProduct, setLoadingProduct] = useState(true)
   const [checkingAccess, setCheckingAccess] = useState(false)
   const [submitting, setSubmitting] = useState(false)
@@ -44,58 +49,76 @@ export function PaidGuideSection() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    const savedCustomer = getLastCustomer()
+    let cancelled = false
 
-    if (savedCustomer) {
-      setCustomerName(savedCustomer.customerName)
-      setEmail(savedCustomer.email)
+    async function loadProduct() {
+      try {
+        const productResponse = await getProductBySlug(GUIDE_SLUG)
+
+        if (!cancelled) {
+          setProduct(productResponse)
+        }
+      } catch (loadError) {
+        if (!cancelled) {
+          setError(loadError instanceof Error ? loadError.message : 'No se pudo cargar la guía.')
+        }
+      } finally {
+        if (!cancelled) {
+          setLoadingProduct(false)
+        }
+      }
     }
 
-    void loadProduct(savedCustomer?.email)
+    void loadProduct()
+
+    return () => {
+      cancelled = true
+    }
   }, [])
 
-  async function loadProduct(savedEmail?: string) {
-    setLoadingProduct(true)
-    setError('')
+  useEffect(() => {
+    async function unlockFromPrivateLink() {
+      const tokenFromLink = new URLSearchParams(location.search).get('access')
+      const token = tokenFromLink ?? sessionStorage.getItem(GUIDE_ACCESS_STORAGE_KEY)
 
-    try {
-      const productResponse = await getProductBySlug(GUIDE_SLUG)
-      setProduct(productResponse)
-
-      if (savedEmail) {
-        await verifyAccess(savedEmail, productResponse.slug)
+      if (!token) {
+        return
       }
-    } catch (loadError) {
-      setError(loadError instanceof Error ? loadError.message : 'No se pudo cargar la guía.')
-    } finally {
-      setLoadingProduct(false)
-    }
-  }
 
-  async function verifyAccess(emailValue = email, slugValue = product?.slug ?? GUIDE_SLUG) {
-    if (!emailValue.trim()) {
-      setError('Escribe tu correo para verificar acceso.')
-      return
+      setCheckingAccess(true)
+      setError('')
+
+      try {
+        const response = await verifyProtectedAccess(token)
+
+        if (!response.hasAccess || response.slug !== GUIDE_SLUG) {
+          throw new Error('Este enlace no corresponde a este workbook.')
+        }
+
+        sessionStorage.setItem(GUIDE_ACCESS_STORAGE_KEY, token)
+        setAccessToken(token)
+        setHasAccess(true)
+        setMessage('Tu enlace privado es válido. Ya puedes abrir el PDF completo.')
+      } catch (accessError) {
+        sessionStorage.removeItem(GUIDE_ACCESS_STORAGE_KEY)
+        setAccessToken('')
+        setHasAccess(false)
+        setError(
+          accessError instanceof Error
+            ? accessError.message
+            : 'El enlace privado no es válido o ya venció.',
+        )
+      } finally {
+        setCheckingAccess(false)
+
+        if (tokenFromLink) {
+          navigate(location.pathname, { replace: true })
+        }
+      }
     }
 
-    setCheckingAccess(true)
-    setError('')
-    setMessage('')
-
-    try {
-      const response = await checkAccess(emailValue.trim(), slugValue)
-      setHasAccess(response.hasAccess)
-      setMessage(
-        response.hasAccess
-          ? 'Tu acceso ya está activo. Puedes revisar la guía completa.'
-          : 'Todavía no tienes acceso desbloqueado para esta guía.',
-      )
-    } catch (accessError) {
-      setError(accessError instanceof Error ? accessError.message : 'No se pudo verificar el acceso.')
-    } finally {
-      setCheckingAccess(false)
-    }
-  }
+    void unlockFromPrivateLink()
+  }, [location.pathname, location.search, navigate])
 
   async function handlePurchase() {
     if (!product) {
@@ -148,8 +171,8 @@ export function PaidGuideSection() {
   }
 
   async function handleProtectedFile(mode: 'view' | 'download') {
-    if (!email.trim()) {
-      setError('Necesitas tu correo para validar el acceso al archivo.')
+    if (!accessToken) {
+      setError('Abre el enlace privado que recibiste por correo para acceder al archivo.')
       return
     }
 
@@ -157,10 +180,22 @@ export function PaidGuideSection() {
     setError('')
 
     try {
-      const links = await requestProtectedDownload(email.trim(), GUIDE_SLUG)
-      const targetUrl = mode === 'download' ? links.downloadUrl : links.viewUrl
+      const file = await getProtectedFile(accessToken, mode === 'download')
+      const fileUrl = URL.createObjectURL(file)
+      const link = document.createElement('a')
+      link.href = fileUrl
 
-      window.open(targetUrl, '_blank', 'noopener,noreferrer')
+      if (mode === 'download') {
+        link.download = 'guia-para-la-ansiedad.pdf'
+      } else {
+        link.target = '_blank'
+        link.rel = 'noopener noreferrer'
+      }
+
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+      window.setTimeout(() => URL.revokeObjectURL(fileUrl), 60_000)
     } catch (downloadError) {
       setError(downloadError instanceof Error ? downloadError.message : 'No se pudo abrir el PDF protegido.')
     } finally {
@@ -247,10 +282,6 @@ export function PaidGuideSection() {
         </p>
 
         <div className="paidGuide__actions">
-          <button className="btn" type="button" onClick={() => void verifyAccess()} disabled={checkingAccess || loadingProduct}>
-            {checkingAccess ? 'Verificando acceso...' : 'Verificar acceso'}
-          </button>
-
           {!hasAccess && (
             <button className="btn paidGuide__buyBtn" type="button" onClick={() => void handlePurchase()} disabled={submitting || loadingProduct}>
               {submitting ? 'Conectando con PayPal...' : '¡Comprar ahora!'}
@@ -258,6 +289,7 @@ export function PaidGuideSection() {
           )}
         </div>
 
+        {checkingAccess && <p className="paidGuide__message">Verificando tu enlace privado...</p>}
         {message && <p className="paidGuide__message">{message}</p>}
         {error && <p className="paidGuide__error">{error}</p>}
       </div>

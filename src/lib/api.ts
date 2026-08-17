@@ -25,17 +25,10 @@ export type PaypalOrder = {
   approveLink: string | null
 }
 
-export type AccessCheckResponse = {
+export type AccessTokenResponse = {
   hasAccess: boolean
-  userId?: string
-  productId?: string
-  grantedAt?: string | null
-}
-
-export type DownloadLinksResponse = {
-  viewUrl: string
-  downloadUrl: string
-  expiresInMinutes: number
+  slug: string
+  expiresAt: string
 }
 
 type RequestOptions = RequestInit & {
@@ -104,16 +97,27 @@ export function capturePaypalOrder(orderId: string, paypalOrderId: string) {
   })
 }
 
-export function checkAccess(email: string, slug: string) {
-  const query = new URLSearchParams({ email, slug }).toString()
-  return request<AccessCheckResponse>(`/access/check?${query}`, {
-    method: 'GET',
+export function verifyProtectedAccess(token: string) {
+  return request<AccessTokenResponse>('/downloads/verify', {
+    method: 'POST',
+    body: JSON.stringify({ token }),
   })
 }
 
-export function requestProtectedDownload(email: string, slug: string) {
-  return request<DownloadLinksResponse>('/downloads/request', {
+export async function getProtectedFile(token: string, download: boolean) {
+  const query = download ? '?download=1' : ''
+  const response = await fetch(`${API_BASE_URL}/downloads/file${query}`, {
     method: 'POST',
-    body: JSON.stringify({ email, slug }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ token }),
   })
+
+  if (!response.ok) {
+    const payload = (await response.json().catch(() => null)) as { message?: string } | null
+    throw new Error(payload?.message ?? 'No se pudo abrir el PDF protegido.')
+  }
+
+  return response.blob()
 }
