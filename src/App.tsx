@@ -135,14 +135,17 @@ function AppContent() {
               </DetailPage>
             }
           />
-          <Route
-            path="/workbooks/guia-para-el-estres"
-            element={
-              <DetailPage>
-                <WorkbookGuidePageSection />
-              </DetailPage>
-            }
-          />
+              {workbookGuides.map((guide) => (
+                <Route
+                  key={guide.slug}
+                  path={`/workbooks/${guide.slug}`}
+                  element={
+                    <DetailPage>
+                      <WorkbookGuidePageSection guide={guide} />
+                    </DetailPage>
+                  }
+                />
+              ))}
           <Route
             path="/precios"
             element={

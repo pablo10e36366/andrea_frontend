@@ -14,26 +14,16 @@ import {
   saveLastCustomer,
   savePendingPurchase,
 } from '../lib/purchaseStorage'
+import type { WorkbookGuide } from '../data/siteContent'
 
-const GUIDE_SLUG = 'guia-para-el-estres'
-const GUIDE_ACCESS_STORAGE_KEY = `workbook-access:${GUIDE_SLUG}`
-const GUIDE_PREVIEW_URL = '/previews/guia-para-el-estres-preview.pdf#toolbar=0&navpanes=0&scrollbar=0'
+type PaidGuideSectionProps = {
+  guide: WorkbookGuide
+}
 
-const guideTopics = [
-  'Qué es el estrés y cómo identificarlo a tiempo.',
-  'Señales físicas, emocionales y mentales más frecuentes.',
-  'Ejercicios prácticos para bajar la tensión en minutos.',
-  'Rutina sencilla para prevenir que el estrés te sobrepase.',
-]
-
-const unlockedTools = [
-  'Ejercicio de respiración guiada.',
-  'Checklist personal de detonantes.',
-  'Plan breve de regulación emocional.',
-  'Recomendaciones prácticas para el día a día.',
-]
-
-export function PaidGuideSection() {
+export function PaidGuideSection({ guide }: PaidGuideSectionProps) {
+  const { slug, previewUrl, downloadFilename, topics, tools } = guide
+  const guideAccessStorageKey = `workbook-access:${slug}`
+  const guidePreviewUrl = `${previewUrl}#toolbar=0&navpanes=0&scrollbar=0`
   const location = useLocation()
   const navigate = useNavigate()
   const [product, setProduct] = useState<Product | null>(null)
@@ -53,7 +43,7 @@ export function PaidGuideSection() {
 
     async function loadProduct() {
       try {
-        const productResponse = await getProductBySlug(GUIDE_SLUG)
+        const productResponse = await getProductBySlug(slug)
 
         if (!cancelled) {
           setProduct(productResponse)
@@ -74,12 +64,12 @@ export function PaidGuideSection() {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [slug])
 
   useEffect(() => {
     async function unlockFromPrivateLink() {
       const tokenFromLink = new URLSearchParams(location.search).get('access')
-      const token = tokenFromLink ?? sessionStorage.getItem(GUIDE_ACCESS_STORAGE_KEY)
+    const token = tokenFromLink ?? sessionStorage.getItem(guideAccessStorageKey)
 
       if (!token) {
         return
@@ -91,16 +81,16 @@ export function PaidGuideSection() {
       try {
         const response = await verifyProtectedAccess(token)
 
-        if (!response.hasAccess || response.slug !== GUIDE_SLUG) {
+        if (!response.hasAccess || response.slug !== slug) {
           throw new Error('Este enlace no corresponde a este workbook.')
         }
 
-        sessionStorage.setItem(GUIDE_ACCESS_STORAGE_KEY, token)
+        sessionStorage.setItem(guideAccessStorageKey, token)
         setAccessToken(token)
         setHasAccess(true)
         setMessage('Tu enlace privado es válido. Ya puedes abrir el PDF completo.')
       } catch (accessError) {
-        sessionStorage.removeItem(GUIDE_ACCESS_STORAGE_KEY)
+        sessionStorage.removeItem(guideAccessStorageKey)
         setAccessToken('')
         setHasAccess(false)
         setError(
@@ -118,7 +108,7 @@ export function PaidGuideSection() {
     }
 
     void unlockFromPrivateLink()
-  }, [location.pathname, location.search, navigate])
+  }, [guideAccessStorageKey, location.pathname, location.search, navigate, slug])
 
   async function handlePurchase() {
     if (!product) {
@@ -186,7 +176,7 @@ export function PaidGuideSection() {
       link.href = fileUrl
 
       if (mode === 'download') {
-        link.download = 'guia-para-la-ansiedad.pdf'
+      link.download = downloadFilename
       } else {
         link.target = '_blank'
         link.rel = 'noopener noreferrer'
@@ -206,7 +196,7 @@ export function PaidGuideSection() {
   return (
     <div className="card paidGuide">
       <div className="guidePreviewDocument">
-        <iframe className="guidePreviewDocument__frame" src={GUIDE_PREVIEW_URL} title="Vista previa del workbook" />
+              <iframe className="guidePreviewDocument__frame" src={guidePreviewUrl} title={`Vista previa de ${guide.title}`} />
       </div>
 
       {!hasAccess && (
@@ -228,7 +218,7 @@ export function PaidGuideSection() {
           </p>
 
           <ul className="list">
-            {guideTopics.map((topic) => (
+                {topics.map((topic) => (
               <li key={topic}>{topic}</li>
             ))}
           </ul>
@@ -237,7 +227,7 @@ export function PaidGuideSection() {
             <>
               <p className="paidGuide__unlockedTitle">Acceso completo desbloqueado</p>
               <ul className="list">
-                {unlockedTools.map((tool) => (
+                {tools.map((tool) => (
                   <li key={tool}>{tool}</li>
                 ))}
               </ul>

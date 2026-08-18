@@ -132,11 +132,11 @@ export function WorkbooksLandingSection({ guides }: WorkbooksLandingSectionProps
   )
 }
 
-export function WorkbookGuidePageSection() {
+export function WorkbookGuidePageSection({ guide }: { guide: WorkbookGuide }) {
   return (
     <section id="detail-workbook-guide" className="section">
-      <h2>Workbook: Guía para la ansiedad</h2>
-      <PaidGuideSection />
+      <h2>Workbook: {guide.title}</h2>
+      <PaidGuideSection guide={guide} />
     </section>
   )
 }

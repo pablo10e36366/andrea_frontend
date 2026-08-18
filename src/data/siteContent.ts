@@ -44,6 +44,10 @@ export type WorkbookGuide = {
   slug: string
   description: string
   priceLabel: string
+  previewUrl: string
+  downloadFilename: string
+  topics: string[]
+  tools: string[]
 }
 
 export const socialLinks: SocialLink[] = [
@@ -203,7 +207,121 @@ export const workbookGuides: WorkbookGuide[] = [
   {
     title: 'Guía para la ansiedad',
     slug: 'guia-para-el-estres',
-    description: 'Workbook práctico con herramientas para entender, regular y disminuir el estrés paso a paso.',
+    description: 'Workbook práctico con herramientas para entender, regular y disminuir la ansiedad paso a paso.',
     priceLabel: '$12.50',
+    previewUrl: '/previews/guia-para-el-estres-preview.pdf',
+    downloadFilename: 'guia-para-la-ansiedad.pdf',
+    topics: [
+      'Qué es la ansiedad y cómo identificarla a tiempo.',
+      'Señales físicas, emocionales y mentales más frecuentes.',
+      'Ejercicios prácticos para recuperar la calma en minutos.',
+      'Rutina sencilla para prevenir que la ansiedad te sobrepase.',
+    ],
+    tools: [
+      'Ejercicio de respiración guiada.',
+      'Checklist personal de detonantes.',
+      'Plan breve de regulación emocional.',
+      'Recomendaciones prácticas para el día a día.',
+    ],
+  },
+  {
+    title: 'Cómo dejar de procrastinar en 7 días',
+    slug: 'como-dejar-de-procrastinar-en-7-dias',
+    description: 'Workbook práctico para reconocer la procrastinación y avanzar con estrategias aplicables día a día.',
+    priceLabel: '$12.50',
+    previewUrl: '/previews/como-dejar-de-procrastinar-en-7-dias-preview.pdf',
+    downloadFilename: 'como-dejar-de-procrastinar-en-7-dias.pdf',
+    topics: [
+      'Por qué postergas incluso las tareas importantes.',
+      'Cómo detectar hábitos y pensamientos que mantienen la procrastinación.',
+      'Estrategias prácticas para empezar sin esperar motivación.',
+      'Plan de siete días para avanzar con constancia.',
+    ],
+    tools: [
+      'Registro personal de tareas postergadas.',
+      'Ejercicios para dividir objetivos en pasos pequeños.',
+      'Plan diario de acción.',
+      'Recomendaciones para mantener el hábito.',
+    ],
+  },
+  {
+    title: 'Sanar una ruptura amorosa',
+    slug: 'sanar-una-ruptura-amorosa',
+    description: 'Workbook de acompañamiento para procesar una ruptura amorosa y recuperar el bienestar emocional.',
+    priceLabel: '$12.50',
+    previewUrl: '/previews/sanar-una-ruptura-amorosa-preview.pdf',
+    downloadFilename: 'sanar-una-ruptura-amorosa.pdf',
+    topics: [
+      'Cómo comprender el duelo después de una ruptura.',
+      'Emociones frecuentes y formas saludables de procesarlas.',
+      'Ejercicios para fortalecer el autocuidado y la autoestima.',
+      'Pasos para reconstruir tu bienestar emocional.',
+    ],
+    tools: [
+      'Ejercicios de reflexión personal.',
+      'Plan de autocuidado emocional.',
+      'Registro de avances y emociones.',
+      'Recomendaciones para cerrar ciclos de manera saludable.',
+    ],
+  },
+  {
+    title: 'Desarrollo de habilidades sociales',
+    slug: 'desarrollo-de-habilidades-sociales',
+    description: 'Workbook con ejercicios para fortalecer la comunicación, la seguridad personal y las relaciones.',
+    priceLabel: '$12.50',
+    previewUrl: '/previews/desarrollo-de-habilidades-sociales-preview.pdf',
+    downloadFilename: 'desarrollo-de-habilidades-sociales.pdf',
+    topics: [
+      'Qué son las habilidades sociales y por qué son importantes.',
+      'Cómo comunicarte con claridad y seguridad.',
+      'Estrategias para escuchar, expresarte y manejar conflictos.',
+      'Ejercicios para fortalecer tus relaciones.',
+    ],
+    tools: [
+      'Ejercicios de comunicación asertiva.',
+      'Guía para practicar la escucha activa.',
+      'Registro de situaciones sociales.',
+      'Plan de mejora personal.',
+    ],
+  },
+  {
+    title: 'El poder del NO: establecimiento de límites',
+    slug: 'el-poder-del-no-establecimiento-de-limites',
+    description: 'Workbook práctico para aprender a decir no, establecer límites sanos y cuidar tu bienestar.',
+    priceLabel: '$12.50',
+    previewUrl: '/previews/el-poder-del-no-establecimiento-de-limites-preview.pdf',
+    downloadFilename: 'el-poder-del-no-establecimiento-de-limites.pdf',
+    topics: [
+      'Por qué es importante aprender a decir no.',
+      'Cómo reconocer límites personales y emocionales.',
+      'Estrategias para comunicar límites con respeto.',
+      'Ejercicios para reducir la culpa y cuidar tu bienestar.',
+    ],
+    tools: [
+      'Guía de comunicación asertiva.',
+      'Ejercicios para identificar límites.',
+      'Frases prácticas para decir no.',
+      'Plan personal de límites saludables.',
+    ],
+  },
+  {
+    title: 'Superación personal y crecimiento humano consciente',
+    slug: 'superacion-personal-y-crecimiento-humano-consciente',
+    description: 'Workbook para impulsar el autoconocimiento, la superación personal y un crecimiento consciente.',
+    priceLabel: '$12.50',
+    previewUrl: '/previews/superacion-personal-y-crecimiento-humano-consciente-preview.pdf',
+    downloadFilename: 'superacion-personal-y-crecimiento-humano-consciente.pdf',
+    topics: [
+      'Cómo fortalecer el autoconocimiento y la confianza personal.',
+      'Creencias y hábitos que influyen en tu crecimiento.',
+      'Herramientas para definir objetivos con sentido.',
+      'Prácticas para avanzar de forma consciente.',
+    ],
+    tools: [
+      'Ejercicios de autoconocimiento.',
+      'Registro de fortalezas y aprendizajes.',
+      'Plan de crecimiento personal.',
+      'Recomendaciones para mantener cambios sostenibles.',
+    ],
   },
 ]
