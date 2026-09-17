@@ -60,11 +60,8 @@ function DetailPage({ children }: DetailPageProps) {
   )
 }
 
-function AppContent() {
-  const [phone, setPhone] = useState('')
-  const [openFaq, setOpenFaq] = useState<number | null>(0)
+function NavigationMenu() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const location = useLocation()
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -77,20 +74,26 @@ function AppContent() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
-  useEffect(() => {
-    setMenuOpen(false)
-  }, [location.pathname])
+  return (
+    <MobileMenu
+      menuOpen={menuOpen}
+      onToggle={() => setMenuOpen((value) => !value)}
+      onClose={() => setMenuOpen(false)}
+      links={menuLinks}
+    />
+  )
+}
+
+function AppContent() {
+  const [phone, setPhone] = useState('')
+  const [openFaq, setOpenFaq] = useState<number | null>(0)
+  const location = useLocation()
 
   return (
     <>
       <div className="bg" />
 
-      <MobileMenu
-        menuOpen={menuOpen}
-        onToggle={() => setMenuOpen((value) => !value)}
-        onClose={() => setMenuOpen(false)}
-        links={menuLinks}
-      />
+      <NavigationMenu key={location.pathname} />
 
       <main className="wrap">
         <Routes>

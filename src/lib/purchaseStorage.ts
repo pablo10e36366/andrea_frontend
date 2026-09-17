@@ -7,6 +7,8 @@ export type PendingPurchase = {
   customerName: string
   productId: string
   productSlug: string
+  paypalOrderId?: string
+  paymentConfirmed?: boolean
 }
 
 export type LastCustomer = {
@@ -32,7 +34,8 @@ export function savePendingPurchase(data: PendingPurchase) {
   window.localStorage.setItem(PENDING_PURCHASE_KEY, JSON.stringify(data))
 }
 
-export function clearPendingPurchase() {
+export function clearPendingPurchase(orderId?: string) {
+  if (orderId && getPendingPurchase()?.orderId !== orderId) return
   window.localStorage.removeItem(PENDING_PURCHASE_KEY)
 }
 

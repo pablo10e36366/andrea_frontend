@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import type { CountryOption } from '../data/siteContent'
 
@@ -8,18 +8,27 @@ type CountrySelectProps = {
 }
 
 export function CountrySelect({ countries, defaultCode = '+593' }: CountrySelectProps) {
+  const defaultCountry = countries.find((country) => country.code === defaultCode) ?? countries[0]
+  if (!defaultCountry) return null
+
+  return (
+    <CountrySelectInput
+      key={`${defaultCountry.name}-${defaultCountry.code}`}
+      countries={countries}
+      defaultCountry={defaultCountry}
+    />
+  )
+}
+
+function CountrySelectInput({ countries, defaultCountry }: {
+  countries: CountryOption[]
+  defaultCountry: CountryOption
+}) {
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
 
-  const defaultCountry = useMemo(
-    () => countries.find((country) => country.code === defaultCode) ?? countries[0],
-    [countries, defaultCode],
-  )
-  const [selectedCountry, setSelectedCountry] = useState<CountryOption>(defaultCountry)
-
-  useEffect(() => {
-    setSelectedCountry(defaultCountry)
-  }, [defaultCountry])
+  const [selectedKey, setSelectedKey] = useState(`${defaultCountry.name}-${defaultCountry.code}`)
+  const selectedCountry = countries.find((country) => `${country.name}-${country.code}` === selectedKey) ?? defaultCountry
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -77,7 +86,7 @@ export function CountrySelect({ countries, defaultCode = '+593' }: CountrySelect
                 role="option"
                 aria-selected={isSelected}
                 onClick={() => {
-                  setSelectedCountry(country)
+                  setSelectedKey(`${country.name}-${country.code}`)
                   setMenuOpen(false)
                 }}
               >

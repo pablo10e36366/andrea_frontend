@@ -208,7 +208,7 @@ export const workbookGuides: WorkbookGuide[] = [
     title: 'Guía para la ansiedad',
     slug: 'guia-para-el-estres',
     description: 'Workbook práctico con herramientas para entender, regular y disminuir la ansiedad paso a paso.',
-    priceLabel: '$12.50',
+    priceLabel: '$3.00',
     previewUrl: '/previews/guia-para-el-estres-preview.pdf',
     downloadFilename: 'guia-para-la-ansiedad.pdf',
     topics: [
@@ -228,7 +228,7 @@ export const workbookGuides: WorkbookGuide[] = [
     title: 'Cómo dejar de procrastinar en 7 días',
     slug: 'como-dejar-de-procrastinar-en-7-dias',
     description: 'Workbook práctico para reconocer la procrastinación y avanzar con estrategias aplicables día a día.',
-    priceLabel: '$12.50',
+    priceLabel: '$3.00',
     previewUrl: '/previews/como-dejar-de-procrastinar-en-7-dias-preview.pdf',
     downloadFilename: 'como-dejar-de-procrastinar-en-7-dias.pdf',
     topics: [
@@ -248,7 +248,7 @@ export const workbookGuides: WorkbookGuide[] = [
     title: 'Sanar una ruptura amorosa',
     slug: 'sanar-una-ruptura-amorosa',
     description: 'Workbook de acompañamiento para procesar una ruptura amorosa y recuperar el bienestar emocional.',
-    priceLabel: '$12.50',
+    priceLabel: '$3.00',
     previewUrl: '/previews/sanar-una-ruptura-amorosa-preview.pdf',
     downloadFilename: 'sanar-una-ruptura-amorosa.pdf',
     topics: [
@@ -268,7 +268,7 @@ export const workbookGuides: WorkbookGuide[] = [
     title: 'Desarrollo de habilidades sociales',
     slug: 'desarrollo-de-habilidades-sociales',
     description: 'Workbook con ejercicios para fortalecer la comunicación, la seguridad personal y las relaciones.',
-    priceLabel: '$12.50',
+    priceLabel: '$3.00',
     previewUrl: '/previews/desarrollo-de-habilidades-sociales-preview.pdf',
     downloadFilename: 'desarrollo-de-habilidades-sociales.pdf',
     topics: [
@@ -288,7 +288,7 @@ export const workbookGuides: WorkbookGuide[] = [
     title: 'El poder del NO: establecimiento de límites',
     slug: 'el-poder-del-no-establecimiento-de-limites',
     description: 'Workbook práctico para aprender a decir no, establecer límites sanos y cuidar tu bienestar.',
-    priceLabel: '$12.50',
+    priceLabel: '$3.00',
     previewUrl: '/previews/el-poder-del-no-establecimiento-de-limites-preview.pdf',
     downloadFilename: 'el-poder-del-no-establecimiento-de-limites.pdf',
     topics: [
@@ -308,7 +308,7 @@ export const workbookGuides: WorkbookGuide[] = [
     title: 'Superación personal y crecimiento humano consciente',
     slug: 'superacion-personal-y-crecimiento-humano-consciente',
     description: 'Workbook para impulsar el autoconocimiento, la superación personal y un crecimiento consciente.',
-    priceLabel: '$12.50',
+    priceLabel: '$3.00',
     previewUrl: '/previews/superacion-personal-y-crecimiento-humano-consciente-preview.pdf',
     downloadFilename: 'superacion-personal-y-crecimiento-humano-consciente.pdf',
     topics: [

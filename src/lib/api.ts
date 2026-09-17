@@ -91,7 +91,7 @@ export function createPaypalOrder(orderId: string) {
 }
 
 export function capturePaypalOrder(orderId: string, paypalOrderId: string) {
-  return request('/paypal/capture-order', {
+  return request<{ deliveryStatus: 'sent' | 'pending' }>('/paypal/capture-order', {
     method: 'POST',
     body: JSON.stringify({ orderId, paypalOrderId }),
   })
